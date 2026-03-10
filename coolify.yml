@@ -1,0 +1,18 @@
+name: divloo-store-server-monitoring
+version: 1
+
+services:
+  - name: web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.divloo-store-server-monitoring.rule=Host(`server.divloo.store`)"
+      - "traefik.http.routers.divloo-store-server-monitoring.tls=true"
+      - "traefik.http.routers.divloo-store-server-monitoring.tls.certresolver=letsencrypt"
+      - "traefik.http.services.divloo-store-server-monitoring.loadbalancer.server.port=3001"
